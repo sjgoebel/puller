@@ -15,19 +15,12 @@ def get_projects():
 
     parser = optparse.OptionParser()
     parser.add_option('-b', '--branch', dest='branch', help="assignment slug")
-    parser.add_option('-u', '--username', dest='username', help="github username")
-    parser.add_option('-p', '--password', dest='password', help='github password')
+
 
     (options, args) = parser.parse_args()
 
     if options.branch is None:
         options.branch = input('Assignment Slug:')
-
-    if options.username is None:
-        options.username = input('Github Username:')
-
-    if options.password is None:
-        options.password = input('Github Password:')
 
     foldername = input("What should I call the folder?")
 
@@ -46,15 +39,11 @@ def get_projects():
     people = file.readlines()
     for person in people:
         (studentname, githubname) = person.split(",")
-        #githubname += ".git"
+        githubname += ".git"
         #git clone the folder.
-        githuburl = "https://github.com/me50/" + githubname
+        githuburl = "git@github.com:me50/" + githubname
         destinationurl = "/home/ubuntu/studentwork/" + foldername + "/" + studentname
         pexpecter = pexpect.spawn("git clone -b " + options.branch + " " + githuburl + " " + destinationurl)
-        pexpecter.expect("Username for 'https://github.com': ")
-        pexpecter.sendline(options.username)
-        pexpecter.expect("Password for 'https://" + options.username + "@github.com': ")
-        pexpecter.sendline(options.password)
         pexpecter.wait()
 
 get_projects()
