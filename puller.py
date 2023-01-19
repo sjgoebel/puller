@@ -9,7 +9,7 @@ import time
 import os
 
 def get_projects():
-    if not os.path.isdir("/home/ubuntu/studentwork/"):
+    if not os.path.isdir("/workspaces/studentwork"):
         print("Make a directory called 'studentwork' in your workspace.")
         return
 
@@ -33,7 +33,7 @@ def get_projects():
         return
 
     #make the assignment folder.  If it already exists, make a new one with today's date appended.
-    subprocess.call("mkdir /home/ubuntu/studentwork/" + foldername, shell=True)
+    subprocess.call("mkdir /workspaces/studentwork/" + foldername, shell=True)
 
 
     people = file.readlines()
@@ -42,7 +42,7 @@ def get_projects():
         githubname += ".git"
         #git clone the folder.
         githuburl = "git@github.com:me50/" + githubname
-        destinationurl = "/home/ubuntu/studentwork/" + foldername + "/" + studentname
+        destinationurl = "/workspaces/studentwork/" + foldername + "/" + studentname
         pexpecter = pexpect.spawn("git clone -b " + options.branch + " " + githuburl + " " + destinationurl)
         pexpecter.wait()
 
